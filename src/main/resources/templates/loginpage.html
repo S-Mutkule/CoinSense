@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>
+            Welcome to Coin Sense
+        </title>
+    </head>
+    <body style = "background-color : rgb(255, 99, 71);">
+        <h1 style="text-align:center;background-color:rgb(100,10,80)">
+            Welcome to Savers ville!
+        </h1>
+        <form role="form" method="post" th:object="${loginPage}" th:action="@{/loginPage/login}">
+            <div>
+                <label>Username</label>
+                <input type="text" th:field="*{username}">
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="text" th:field="*{password}">
+            </div>
+            <input type="submit" name="submit">
+        </form>
+    </body>
+</html>
