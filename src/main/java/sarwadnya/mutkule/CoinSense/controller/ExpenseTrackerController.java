@@ -35,7 +35,7 @@ public class ExpenseTrackerController {
     @PostMapping("/loginPage/login")
     public String LogUserIn(@RequestParam Map<String, String> map){
         if(accountHandler.checkUserExists(map.get("username")))
-            return "";
+            return "welcomepage";
         else
             return "usernotfound";
     }
@@ -49,7 +49,7 @@ public class ExpenseTrackerController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> Signup(@RequestParam Map<String, String> map){
-        User user = new User(map.get("name"), map.get("username"), map.get("password"));
+        User user = new User(map.get("username"), map.get("name"), map.get("password"));
         if(accountHandler.insertUserinDB(user))
             return new ResponseEntity<>(map.get("username") + " has been inserted", HttpStatusCode.valueOf(200));
         else
