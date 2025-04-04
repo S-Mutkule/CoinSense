@@ -22,12 +22,8 @@ public class LoginHelper {
     @Autowired
     private MongoRepo mongoRepo;
     public boolean CheckUserExists(String username){
-        MongoUser usermon = mongoRepo.findByusername(username);
-        List<MongoUser> users = mongoRepo.findAll();
-        for(MongoUser user : users){
-            System.out.println(user.username + " " + user.password);
-        }
-        return usermon!=null && !usermon.username.isEmpty();
+        MongoUser userMongodb = mongoRepo.findByusername(username);
+        return userMongodb!=null && !userMongodb.username.isEmpty();
     }
     public boolean matchPassword(User user){
         MongoUser userDB = mongoRepo.findByusername(user.username);
