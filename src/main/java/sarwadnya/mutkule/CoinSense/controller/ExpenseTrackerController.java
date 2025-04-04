@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sarwadnya.mutkule.CoinSense.businesslogic.AccountHandler;
+import sarwadnya.mutkule.CoinSense.businesslogic.LoginResponseEnum;
 import sarwadnya.mutkule.CoinSense.models.LoginPage;
 import sarwadnya.mutkule.CoinSense.models.SignupPage;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
@@ -37,14 +38,19 @@ public class ExpenseTrackerController {
     public String LogUserIn(@RequestParam Map<String, String> map){
         //map.put("password", encryptionInterface.encrypt(map.get("password")));
         User user = getUserObject(map);
-        if(accountHandler.checkUserExists(user)) {
-            if(accountHandler.checkPassword(user))
+        LoginResponseEnum loginResponse = accountHandler.login(user);
+        switch (loginResponse){
+            case SUCCESS -> {
                 return "welcomepage";
-            else
+            }
+            case INVALIDUSERNAME -> {
+                return "usernotfound";
+            }
+            case INVALIDPASSWORD ->  {
                 return "incorrectpasswordpage";
+            }
         }
-        else
-            return "usernotfound";
+        return "";
     }
 
     @GetMapping("/signup")

@@ -14,6 +14,14 @@ public class AccountHandler {
     @Autowired
     private EncryptionInterface encryptionInterface;
 
+    public LoginResponseEnum login(User user){
+        if(!loginHelper.CheckUserExists(user.username))
+            return LoginResponseEnum.INVALIDUSERNAME;
+        else if(!checkPassword(user))
+            return LoginResponseEnum.INVALIDPASSWORD;
+        return LoginResponseEnum.SUCCESS;
+    }
+
     public boolean checkUserExists(User user){
         return loginHelper.CheckUserExists(user.username);
     }

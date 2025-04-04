@@ -1,28 +1,19 @@
 package sarwadnya.mutkule.CoinSense.models.dbentity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "users")
+@Document("EXPENSES")
 @NoArgsConstructor
 @AllArgsConstructor
+public class MongoUser {
 
-public class User {
-
-    @Id @Getter @Setter
-    @Column(unique = true, nullable = false)
+    @Id
     public String username;
 
-    @Column(nullable = false)
     public String name;
 
-    @Column(nullable = false)
     public String password;
-
-
 }
