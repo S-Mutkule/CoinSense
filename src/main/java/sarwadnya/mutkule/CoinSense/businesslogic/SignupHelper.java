@@ -12,12 +12,20 @@ public class SignupHelper {
    private SQLRepository sqlRepository;
    @Autowired
    private MongoRepo mongoRepo;
-
    @Autowired
    private LoginHelper loginHelper;
 
    public boolean signupUser(User userTBI){
-       MongoUser user_mongo = mongoRepo.save(new MongoUser(userTBI.username, userTBI.name, userTBI.password));
-       return !user_mongo.username.isEmpty();
+      try {
+         MongoUser user_mongo = mongoRepo.save(new MongoUser(userTBI.username, userTBI.name, userTBI.password));
+
+         return !user_mongo.username.isEmpty();
+      } catch(Exception ex){
+         return false;
+      }
+   }
+
+   public void changePassword(){
+
    }
 }

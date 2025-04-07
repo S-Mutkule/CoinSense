@@ -9,14 +9,9 @@ import sarwadnya.mutkule.CoinSense.businesslogic.repository.SQLRepository;
 import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
-import java.util.List;
-
 @Component
 @Slf4j
 public class LoginHelper {
-
-    @Autowired
-    private SQLRepository repository;
     @Autowired
     private EncryptionInterface encryptionInterface;
     @Autowired
