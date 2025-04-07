@@ -100,6 +100,7 @@ public class ExpenseTrackerController {
                                  Model model){
         if(accountHandler.checkTokenValidity(token, username)) {
             ChangePasswordPage changePasswordPage = new ChangePasswordPage();
+            changePasswordPage.setUsername(username);
             model.addAttribute("changepasswordpage", changePasswordPage);
             return "changepasswordpage";
         }
@@ -107,6 +108,7 @@ public class ExpenseTrackerController {
     }
     @PostMapping("/changePassword")
     public ResponseEntity<String> changePassowrd(@RequestParam Map<String, String> map){
+        accountHandler.changePassword(map.get("username"), map.get("newPassword"));
         return new ResponseEntity<>("Working on your request", HttpStatusCode.valueOf(200));
     }
     private User getUserObject(Map<String, String> map){

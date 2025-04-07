@@ -5,4 +5,5 @@ import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
 
 public interface MongoRepo extends MongoRepository<MongoUser, String> {
     public MongoUser findByusername(String username);
+    public void deleteByusername(String username);
 }

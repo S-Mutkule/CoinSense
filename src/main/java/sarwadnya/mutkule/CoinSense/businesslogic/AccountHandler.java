@@ -81,4 +81,8 @@ public class AccountHandler {
     private String generateToken(){
         return UUID.randomUUID().toString();
     }
+
+    public void changePassword(String username, String newPassword){
+        signupHelper.changePassword(username, encryptionInterface.bCryptPasswordEncoder().encode(newPassword));
+    }
 }

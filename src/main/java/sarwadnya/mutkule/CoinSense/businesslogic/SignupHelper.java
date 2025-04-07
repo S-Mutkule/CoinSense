@@ -25,7 +25,10 @@ public class SignupHelper {
       }
    }
 
-   public void changePassword(){
-
+   public void changePassword(String username, String newPassword){
+      MongoUser user = mongoRepo.findByusername(username);
+      mongoRepo.deleteByusername(username);
+      user.setPassword(newPassword);
+      mongoRepo.save(user);
    }
 }
