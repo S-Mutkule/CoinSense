@@ -17,9 +17,13 @@ public class User {
     public String username;
 
     @Column(nullable = false)
+    @Getter
+    @Setter
     public String name;
 
     @Column(nullable = false)
+    @Getter
+    @Setter
     public String password;
 
 

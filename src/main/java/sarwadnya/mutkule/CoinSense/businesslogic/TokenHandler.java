@@ -7,7 +7,6 @@ import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoTokenRepo;
 import sarwadnya.mutkule.CoinSense.models.PasswordResetToken;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Component
@@ -26,7 +25,7 @@ public class TokenHandler {
 
     public boolean checkTokenExistsForUser(String token, String user){
         PasswordResetToken passwordResetToken = mongoTokenRepo.findByuser(user);
-        return token.equals(passwordResetToken.getToken());
+        return passwordResetToken!=null && token.equals(passwordResetToken.getToken());
     }
 
     private PasswordResetToken generateTokenObject(String token, int expiryMinutes, String user){

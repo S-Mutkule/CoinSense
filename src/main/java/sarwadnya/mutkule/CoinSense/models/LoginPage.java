@@ -12,6 +12,13 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginPage {
+    @Getter
+    @Setter
     private String username;
+    @Getter
+    @Setter
     private String password;
+    @Getter
+    @Setter
+    private String name;
 }

@@ -51,7 +51,7 @@ public class AccountHandler {
         simpleMailMessage.setTo(email);
         simpleMailMessage.setText("this is the reset link : http://localhost:8080/changePassword" +
                 "?token=" + tokenString +"&username="+email);
-        simpleMailMessage.setSubject("Resetting CoinSense Password");
+        simpleMailMessage.setSubject("CoinSense Password Reset");
         simpleMailMessage.setFrom("sarwadnyacoding@gmail.com");
         getJavaMailSender().send(simpleMailMessage);
     }

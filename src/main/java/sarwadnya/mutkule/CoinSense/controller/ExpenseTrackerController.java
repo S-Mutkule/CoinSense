@@ -39,8 +39,11 @@ public class ExpenseTrackerController {
     }
 
     @PostMapping("/loginPage/login")
-    public String LogUserIn(@RequestParam Map<String, String> map){
-        User user = getUserObject(map);
+    public String LogUserIn(@RequestBody LoginPage loginPage){
+        User user = new User();
+        user.setUsername(loginPage.getUsername());
+        user.setPassword(loginPage.getPassword());
+        user.setName(loginPage.getName());
         LoginResponseEnum loginResponse = accountHandler.login(user);
         switch (loginResponse){
             case SUCCESS -> {
