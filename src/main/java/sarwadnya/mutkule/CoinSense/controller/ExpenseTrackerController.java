@@ -10,12 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import sarwadnya.mutkule.CoinSense.businesslogic.AccountHandler;
 import sarwadnya.mutkule.CoinSense.businesslogic.LoginHelper;
 import sarwadnya.mutkule.CoinSense.businesslogic.LoginResponseEnum;
-import sarwadnya.mutkule.CoinSense.models.ChangePasswordPage;
-import sarwadnya.mutkule.CoinSense.models.LoginPage;
-import sarwadnya.mutkule.CoinSense.models.PasswordResetPage;
-import sarwadnya.mutkule.CoinSense.models.SignupPage;
+import sarwadnya.mutkule.CoinSense.models.*;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
+import java.net.http.HttpResponse;
 import java.util.Map;
 
 @Controller
@@ -39,7 +37,7 @@ public class ExpenseTrackerController {
     }
 
     @PostMapping("/loginPage/login")
-    public String LogUserIn(@RequestBody LoginPage loginPage){
+    public ResponseEntity<ApiResponseLogin> LogUserIn(@RequestBody LoginPage loginPage){
         User user = new User();
         user.setUsername(loginPage.getUsername());
         user.setPassword(loginPage.getPassword());
@@ -47,16 +45,22 @@ public class ExpenseTrackerController {
         LoginResponseEnum loginResponse = accountHandler.login(user);
         switch (loginResponse){
             case SUCCESS -> {
-                return "welcomepage";
+                return ResponseEntity.ok(
+                        new ApiResponseLogin("logged in", 200)
+                );
             }
             case INVALIDUSERNAME -> {
-                return "usernotfound";
+                return ResponseEntity.ok(
+                        new ApiResponseLogin("wrong username", 401)
+                );
             }
             case INVALIDPASSWORD ->  {
-                return "incorrectpasswordpage";
+                return ResponseEntity.ok(
+                        new ApiResponseLogin("wrong password", 401)
+                );
             }
             default -> {
-                return "";
+                return ResponseEntity.ok(null);
             }
         }
     }
@@ -69,10 +73,13 @@ public class ExpenseTrackerController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> Signup(@RequestParam Map<String, String> map){
-        User user = getUserObject(map);
+    public ResponseEntity<String> Signup(@RequestBody SignupPage signupPage){
+        User user = new User();
+        user.setUsername(signupPage.getUsername());
+        user.setPassword(signupPage.getPassword());
+        user.setName(signupPage.getName());
         if(accountHandler.insertUserInDB(user))
-            return new ResponseEntity<>(map.get("username") + " has been inserted",
+            return new ResponseEntity<>(signupPage.getUsername() + " has been inserted",
                     HttpStatusCode.valueOf(200));
         else
             return new ResponseEntity<>("error in user insertion",

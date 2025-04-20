@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
-
     username: '',
     password: ''
   });
@@ -16,9 +15,26 @@ const LoginPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    try{
+        const response = await fetch("/loginPage/login", {
+                method: 'POST',
+                headers: { 'Content-Type' : 'application/json' },
+                body: JSON.stringify({
+                 username : formData.username,
+                 password : formData.password
+                 })
+            });
+            const data = await response.json();
+            console.log('Response:', data);
+            if(data.status == 200){
+                console.log(data.message);
+            }
+      } catch (error) {
+        console.error('Error:', error);
+      }
   };
 
 
