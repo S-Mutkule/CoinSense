@@ -16,4 +16,7 @@ public class ApiResponseLogin {
     @Getter
     @Setter
     private int status;
+    @Getter
+    @Setter
+    private String name;
 }

@@ -9,11 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sarwadnya.mutkule.CoinSense.businesslogic.AccountHandler;
 import sarwadnya.mutkule.CoinSense.businesslogic.LoginHelper;
-import sarwadnya.mutkule.CoinSense.businesslogic.LoginResponseEnum;
 import sarwadnya.mutkule.CoinSense.models.*;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 @Controller
@@ -31,49 +29,20 @@ public class ExpenseTrackerController {
 
     @GetMapping("/loginPage")
     public String GetLoginPage(Model model){
-        LoginPage loginPage = new LoginPage();
-        model.addAttribute("loginPage", loginPage);
+        UserCredentials userCredentials = new UserCredentials();
+        model.addAttribute("loginPage", userCredentials);
         return "loginpage";
-    }
-
-    @PostMapping("/loginPage/login")
-    public ResponseEntity<ApiResponseLogin> LogUserIn(@RequestBody LoginPage loginPage){
-        User user = new User();
-        user.setUsername(loginPage.getUsername());
-        user.setPassword(loginPage.getPassword());
-        user.setName(loginPage.getName());
-        LoginResponseEnum loginResponse = accountHandler.login(user);
-        switch (loginResponse){
-            case SUCCESS -> {
-                return ResponseEntity.ok(
-                        new ApiResponseLogin("logged in", 200)
-                );
-            }
-            case INVALIDUSERNAME -> {
-                return ResponseEntity.ok(
-                        new ApiResponseLogin("wrong username", 401)
-                );
-            }
-            case INVALIDPASSWORD ->  {
-                return ResponseEntity.ok(
-                        new ApiResponseLogin("wrong password", 401)
-                );
-            }
-            default -> {
-                return ResponseEntity.ok(null);
-            }
-        }
     }
 
     @GetMapping("/signup")
     public String SignupPage(Model model){
-        SignupPage signupPage = new SignupPage();
-        model.addAttribute("signupPage", signupPage);
+        UserCredentials userCredentials = new UserCredentials();
+        model.addAttribute("signupPage", userCredentials);
         return "signup";
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> Signup(@RequestBody SignupPage signupPage){
+    public ResponseEntity<String> Signup(@RequestBody UserCredentials signupPage){
         User user = new User();
         user.setUsername(signupPage.getUsername());
         user.setPassword(signupPage.getPassword());
@@ -94,8 +63,8 @@ public class ExpenseTrackerController {
     }
 
     @PostMapping("/resetpassword/sendlink")
-    public ResponseEntity<String> ResetPassword(@RequestParam Map<String, String> map){
-        String user = map.get("username");
+    public ResponseEntity<String> ResetPassword(@RequestBody PasswordResetPage passwordResetPage){
+        String user = passwordResetPage.getEmailID();
         if(loginHelper.CheckUserExists(user)) {
             accountHandler.sendEmailForPasswordReset(user);
             return new ResponseEntity<>("Link sent. Please check your email",
@@ -106,15 +75,15 @@ public class ExpenseTrackerController {
     }
 
     @GetMapping("/changePassword")
-    public String changePassword(@RequestParam String token, @RequestParam String username,
+    public ResponseEntity<ApiResponseLogin> changePassword(@RequestParam String token, @RequestParam String username,
                                  Model model){
         if(accountHandler.checkTokenValidity(token, username)) {
             ChangePasswordPage changePasswordPage = new ChangePasswordPage();
             changePasswordPage.setUsername(username);
             model.addAttribute("changepasswordpage", changePasswordPage);
-            return "changepasswordpage";
+            return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Redirecting to new password entry page", 200, username), HttpStatusCode.valueOf(200));
         }
-        return "invalidtokenpage";
+        return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Invalid Token", 401, username), HttpStatusCode.valueOf(401));
     }
     @PostMapping("/changePassword")
     public ResponseEntity<String> changePassowrd(@RequestParam Map<String, String> map){

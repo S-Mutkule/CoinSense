@@ -17,7 +17,7 @@ public class SignupHelper {
 
    public boolean signupUser(User userTBI){
       try {
-         MongoUser user_mongo = mongoRepo.save(new MongoUser(userTBI.username, userTBI.name, userTBI.password));
+         MongoUser user_mongo = mongoRepo.save(new MongoUser(userTBI.getUsername(), userTBI.getName(), userTBI.getPassword()));
 
          return !user_mongo.username.isEmpty();
       } catch(Exception ex){

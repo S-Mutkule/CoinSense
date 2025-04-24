@@ -1,0 +1,43 @@
+package sarwadnya.mutkule.CoinSense.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import sarwadnya.mutkule.CoinSense.businesslogic.LoginHelper;
+import sarwadnya.mutkule.CoinSense.businesslogic.cache.MemoryCache;
+import sarwadnya.mutkule.CoinSense.businesslogic.mappers.CredentialsMapper;
+import sarwadnya.mutkule.CoinSense.models.ApiResponseLogin;
+import sarwadnya.mutkule.CoinSense.models.UserCredentials;
+import sarwadnya.mutkule.CoinSense.models.dbentity.User;
+
+import static sarwadnya.mutkule.CoinSense.businesslogic.enums.LoginResponseEnum.*;
+
+@Controller
+public class LoginController {
+
+    @Autowired
+    CredentialsMapper credentialsMapper;
+    @Autowired
+    LoginHelper loginHelper;
+    @Autowired
+    MemoryCache memoryCache;
+
+    @PostMapping("/loginPage/login")
+    public ResponseEntity<ApiResponseLogin> LogUserIn(@RequestBody UserCredentials userCredentials){
+        User userClient = credentialsMapper.MapCredsToUser(userCredentials);
+        boolean userExists = loginHelper.CheckUserExists(userClient.getUsername());
+        if(!userExists){
+            return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Wrong Username", 401, ""), HttpStatusCode.valueOf(200));
+        } else{
+            User user = memoryCache.getUsers().get(userClient.getUsername());
+            if(loginHelper.matchPassword(userClient)){
+                return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("SUCCESS", 200, user.getUsername()), HttpStatusCode.valueOf(401));
+            } else{
+                return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("INCORRECT PASSWORD", 401, ""), HttpStatusCode.valueOf(401));
+            }
+        }
+    }
+}

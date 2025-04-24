@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.businesslogic;
+package sarwadnya.mutkule.CoinSense.businesslogic.enums;
 
 public enum ExpenseTypeEnum {
     HOUSING,

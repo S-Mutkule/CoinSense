@@ -2,18 +2,37 @@ import React from 'react';
 import './Login.css';
 import Signup from './Signup';
 import { useNavigate } from 'react-router-dom';
+import Dashboard from './Dashboard';
+import PasswordResetter from './ResetPasswordLinkSender';
+import { useState } from 'react';
 
-const LoginPage = () => {
+
+const LoginPage = ({ onLogin }) => {
   const navigate = useNavigate();
+  const [name, setName] = useState('');
   const [formData, setFormData] = React.useState({
     username: '',
     password: ''
   });
 
+  const alertForUnregisteredUser = () => {
+    alert('Unregistered User! Check the Username Entered')
+  }
+
+  const alertForWrongPassword = () => {
+      alert('Wrong Password! Check the Password Entered')
+    }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+
+   const goToDashboard = ({name}) => {
+      setName({name})
+      onLogin(name);
+      navigate('/Dashboard');
+    };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +49,10 @@ const LoginPage = () => {
             const data = await response.json();
             console.log('Response:', data);
             if(data.status == 200){
-                console.log(data.message);
+                console.log('HUrray:', data);
+                goToDashboard(data.name);
+            } else{
+                data.body.toLowerCase() === "wrong username" ? alertForUnregisteredUser() : alertForWrongPassword();
             }
       } catch (error) {
         console.error('Error:', error);
@@ -44,8 +66,6 @@ const LoginPage = () => {
       <form className="login-container" onSubmit={handleSubmit}>
         <h2>Login to CoinSense</h2>
         <div className="form-row">
-
-
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
@@ -82,7 +102,9 @@ const LoginPage = () => {
           </a>
           </div>
           <div>
-            <a className="forgot-link">Forgot password?</a>
+            <a className="forgot-link"
+            onClick={() => navigate('/passwordResetterLinkSender')}>
+            Forgot password?</a>
           </div>
         </div>
       </form>

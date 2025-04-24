@@ -14,17 +14,17 @@ public class User {
 
     @Id @Getter @Setter
     @Column(unique = true, nullable = false)
-    public String username;
+    private String username;
 
     @Column(nullable = false)
     @Getter
     @Setter
-    public String name;
+    private String name;
 
     @Column(nullable = false)
     @Getter
     @Setter
-    public String password;
+    private String password;
 
 
 }

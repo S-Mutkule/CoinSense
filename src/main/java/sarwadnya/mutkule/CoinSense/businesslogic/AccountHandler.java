@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 import sarwadnya.mutkule.CoinSense.businesslogic.encryption.EncryptionInterface;
+import sarwadnya.mutkule.CoinSense.businesslogic.enums.LoginResponseEnum;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
 import java.util.Properties;
@@ -24,7 +25,8 @@ public class AccountHandler {
     private TokenHandler tokenHandler;
 
     public LoginResponseEnum login(User user){
-        if(!loginHelper.CheckUserExists(user.username))
+        boolean loginResponse = loginHelper.CheckUserExists(user.getUsername());
+        if(!loginResponse)
             return LoginResponseEnum.INVALIDUSERNAME;
         else if(!checkPassword(user))
             return LoginResponseEnum.INVALIDPASSWORD;
@@ -32,11 +34,11 @@ public class AccountHandler {
     }
 
     public boolean checkUserExists(User user){
-        return loginHelper.CheckUserExists(user.username);
+        return loginHelper.CheckUserExists(user.getUsername());
     }
 
     public boolean insertUserInDB(User user){
-        user.password = encryptionInterface.bCryptPasswordEncoder().encode(user.password);
+        user.setPassword(encryptionInterface.bCryptPasswordEncoder().encode(user.getPassword()));
         return signupHelper.signupUser(user);
     }
 

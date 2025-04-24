@@ -1,17 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-import Login from './Login';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import LoginPage from './Login'; // Your existing login page
+import Dashboard from './Dashboard';   // The dashboard component from the previous answer
 import Signup from './Signup';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PasswordResetLinkSender from './ResetPasswordLinkSender';
+import NewPasswordPage from './GetNewPasswordPage';
 
 function App() {
+
+  const [username, setUsername] = useState('');
+  const onLoginSuccess = (name) => {
+    setUsername(name);
+  }
+
   return (
+
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<LoginPage onLogin={onLoginSuccess} />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/Dashboard" element={<Dashboard name={username} />} />
+        <Route path="/changePassword" element={<Dashboard />} />
+        <Route path="passwordResetterLinkSender" element={<PasswordResetLinkSender />} />
       </Routes>
     </Router>
+
   );
 }
 

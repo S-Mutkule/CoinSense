@@ -10,8 +10,8 @@
         <h1 style="text-align:center;background-color:rgb(100,10,80)">
             Welcome to Savers ville!
         </h1>
-        <form id="loginForm" style="text-align:center;" role="form" method="post" th:object="${loginPage}" th:action=
-                "@{/loginPage/login}">
+        <form id="loginForm" style="text-align:center;" role="form" method="post" th:object="${userCredentials}" th:action=
+                "@{/userCredentials/login}">
             <div style="padding:15px">
                 <label>Username</label>
                 <input type="text" th:field="*{username}">
@@ -46,7 +46,7 @@
     const jsonData = Object.fromEntries(formData.entries());
 
     // Send to Spring backend
-    fetch('/loginPage/login', {
+    fetch('/userCredentials/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(jsonData)
