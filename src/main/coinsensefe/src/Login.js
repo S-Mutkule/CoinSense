@@ -29,6 +29,7 @@ const LoginPage = ({ onLogin }) => {
   };
 
    const goToDashboard = ({name}) => {
+      console.log('go to dashboard', name);
       setName({name})
       onLogin(name);
       navigate('/Dashboard');
@@ -50,7 +51,7 @@ const LoginPage = ({ onLogin }) => {
             console.log('Response:', data);
             if(data.status == 200){
                 console.log('HUrray:', data);
-                goToDashboard(data.name);
+                goToDashboard({name : data.name});
             } else{
                 data.body.toLowerCase() === "wrong username" ? alertForUnregisteredUser() : alertForWrongPassword();
             }
@@ -103,7 +104,7 @@ const LoginPage = ({ onLogin }) => {
           </div>
           <div>
             <a className="forgot-link"
-            onClick={() => navigate('/passwordResetterLinkSender')}>
+            onClick={() => navigate('/resetpassword')}>
             Forgot password?</a>
           </div>
         </div>

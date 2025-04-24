@@ -12,7 +12,9 @@ const ExpenseTypeEnum = {
 
 
 function ExpenseTable({name}) {
-
+  console.log('Name :', name);
+  const username = {name};
+  console.log('Names :', username);
   const [rows, setRows] = useState([
     { dateOfExpense: '', expenseType: '', amount: '' },
   ]);
@@ -47,7 +49,7 @@ function ExpenseTable({name}) {
     setIsSubmitting(true);
     setSubmitMessage('');
     try {
-      const response = await fetch('http://localhost:5000/expenses', {
+      const response = await fetch('/expenses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ expenses: rows }),
@@ -67,7 +69,7 @@ function ExpenseTable({name}) {
   return (
     <div style={{ padding: '24px', fontFamily: 'Segoe UI, Arial, sans-serif', background: '#f6f8fa', minHeight: '100vh' }}>
       <h1 style={{ color: '#2d3748', marginBottom: 0 }}>Coinsense</h1>
-      <h3 style={{ color: '#4fd1c5', marginTop: 4, marginBottom: 24 }}>{name}</h3>
+      <h3 style={{ color: '#4fd1c5', marginTop: 4, marginBottom: 24 }}>Welcome {name}!!</h3>
       <form onSubmit={handleSubmit}>
         <table style={{ borderCollapse: 'collapse', width: '100%', maxWidth: 700, background: '#fff', boxShadow: '0 2px 8px #e2e8f0', borderRadius: 8, overflow: 'hidden' }}>
           <thead>

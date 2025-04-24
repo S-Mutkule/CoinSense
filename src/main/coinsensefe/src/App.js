@@ -10,6 +10,7 @@ function App() {
 
   const [username, setUsername] = useState('');
   const onLoginSuccess = (name) => {
+    console.log(name);
     setUsername(name);
   }
 

@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.controller;
+package sarwadnya.mutkule.CoinSense.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -13,7 +13,6 @@ import sarwadnya.mutkule.CoinSense.models.ApiResponseLogin;
 import sarwadnya.mutkule.CoinSense.models.UserCredentials;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
-import static sarwadnya.mutkule.CoinSense.businesslogic.enums.LoginResponseEnum.*;
 
 @Controller
 public class LoginController {
@@ -34,7 +33,7 @@ public class LoginController {
         } else{
             User user = memoryCache.getUsers().get(userClient.getUsername());
             if(loginHelper.matchPassword(userClient)){
-                return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("SUCCESS", 200, user.getUsername()), HttpStatusCode.valueOf(401));
+                return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("SUCCESS", 200, user.getName()), HttpStatusCode.valueOf(401));
             } else{
                 return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("INCORRECT PASSWORD", 401, ""), HttpStatusCode.valueOf(401));
             }

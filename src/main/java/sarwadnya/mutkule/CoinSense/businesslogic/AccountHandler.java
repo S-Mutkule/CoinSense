@@ -6,8 +6,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
+import sarwadnya.mutkule.CoinSense.businesslogic.cache.MemoryCache;
 import sarwadnya.mutkule.CoinSense.businesslogic.encryption.EncryptionInterface;
-import sarwadnya.mutkule.CoinSense.businesslogic.enums.LoginResponseEnum;
+import sarwadnya.mutkule.CoinSense.businesslogic.mappers.MongoUserMapper;
+import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoRepo;
+import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
 import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
 import java.util.Properties;
@@ -15,36 +18,17 @@ import java.util.UUID;
 
 @Component
 public class AccountHandler {
-    @Autowired
-    private LoginHelper loginHelper;
-    @Autowired
-    private SignupHelper signupHelper;
+
     @Autowired
     private EncryptionInterface encryptionInterface;
     @Autowired
     private TokenHandler tokenHandler;
-
-    public LoginResponseEnum login(User user){
-        boolean loginResponse = loginHelper.CheckUserExists(user.getUsername());
-        if(!loginResponse)
-            return LoginResponseEnum.INVALIDUSERNAME;
-        else if(!checkPassword(user))
-            return LoginResponseEnum.INVALIDPASSWORD;
-        return LoginResponseEnum.SUCCESS;
-    }
-
-    public boolean checkUserExists(User user){
-        return loginHelper.CheckUserExists(user.getUsername());
-    }
-
-    public boolean insertUserInDB(User user){
-        user.setPassword(encryptionInterface.bCryptPasswordEncoder().encode(user.getPassword()));
-        return signupHelper.signupUser(user);
-    }
-
-    public boolean checkPassword(User user){
-        return loginHelper.matchPassword(user);
-    }
+    @Autowired
+    private MongoRepo mongoRepo;
+    @Autowired
+    private MemoryCache memoryCache;
+    @Autowired
+    private MongoUserMapper mongoUserMapper;
 
     public void sendEmailForPasswordReset(String email){
         String tokenString = generateToken();
@@ -85,6 +69,9 @@ public class AccountHandler {
     }
 
     public void changePassword(String username, String newPassword){
-        signupHelper.changePassword(username, encryptionInterface.bCryptPasswordEncoder().encode(newPassword));
+        User user = memoryCache.getUsers().get(username);
+        mongoRepo.deleteByusername(username);
+        user.setPassword(encryptionInterface.bCryptPasswordEncoder().encode(newPassword));
+        mongoRepo.save(mongoUserMapper.mapUserToMongoUser(user));
     }
 }

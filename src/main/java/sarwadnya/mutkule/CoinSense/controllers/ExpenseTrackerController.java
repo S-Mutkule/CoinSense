@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.controller;
+package sarwadnya.mutkule.CoinSense.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import sarwadnya.mutkule.CoinSense.businesslogic.AccountHandler;
 import sarwadnya.mutkule.CoinSense.businesslogic.LoginHelper;
 import sarwadnya.mutkule.CoinSense.models.*;
-import sarwadnya.mutkule.CoinSense.models.dbentity.User;
 
 import java.util.Map;
 
@@ -25,34 +24,6 @@ public class ExpenseTrackerController {
     @GetMapping("/expenseTracker/home")
     public String ExpenseTracker(){
         return "expensetracker";
-    }
-
-    @GetMapping("/loginPage")
-    public String GetLoginPage(Model model){
-        UserCredentials userCredentials = new UserCredentials();
-        model.addAttribute("loginPage", userCredentials);
-        return "loginpage";
-    }
-
-    @GetMapping("/signup")
-    public String SignupPage(Model model){
-        UserCredentials userCredentials = new UserCredentials();
-        model.addAttribute("signupPage", userCredentials);
-        return "signup";
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<String> Signup(@RequestBody UserCredentials signupPage){
-        User user = new User();
-        user.setUsername(signupPage.getUsername());
-        user.setPassword(signupPage.getPassword());
-        user.setName(signupPage.getName());
-        if(accountHandler.insertUserInDB(user))
-            return new ResponseEntity<>(signupPage.getUsername() + " has been inserted",
-                    HttpStatusCode.valueOf(200));
-        else
-            return new ResponseEntity<>("error in user insertion",
-                    HttpStatusCode.valueOf(500));
     }
 
     @GetMapping("/resetpassword")
@@ -90,7 +61,20 @@ public class ExpenseTrackerController {
         accountHandler.changePassword(map.get("username"), map.get("newPassword"));
         return new ResponseEntity<>("Working on your request", HttpStatusCode.valueOf(200));
     }
-    private User getUserObject(Map<String, String> map){
-        return new User(map.get("username"), map.get("name"), map.get("password"));
-    }
 }
+
+/*
+* @GetMapping("/loginPage")
+    public String GetLoginPage(Model model){
+        UserCredentials userCredentials = new UserCredentials();
+        model.addAttribute("loginPage", userCredentials);
+        return "loginpage";
+    }
+
+    @GetMapping("/signup")
+    public String SignupPage(Model model){
+        UserCredentials userCredentials = new UserCredentials();
+        model.addAttribute("signupPage", userCredentials);
+        return "signup";
+    }
+* */
