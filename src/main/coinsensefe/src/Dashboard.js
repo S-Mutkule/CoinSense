@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Define your expense types
 const ExpenseTypeEnum = {
@@ -13,6 +14,7 @@ const ExpenseTypeEnum = {
 
 function ExpenseTable({name, username_, LogOut}) {
 
+  const navigate = useNavigate();
   console.log('Name :', name);
   const username = {name};
   console.log('Names :', username);
@@ -105,12 +107,16 @@ function ExpenseTable({name, username_, LogOut}) {
         setIsFetched(true);
         setSubmitMessage('');
         const data = await response.json();
+        if(data != null && data.expensesList != null)
         setFetchedRows(data.expensesList);
     } catch(error){
         console.log(error);
     }
   }
-
+  const handleLogout = () => {
+    LogOut();
+    navigate('/');
+  }
 
   return (
     <div style={{ padding: '24px', fontFamily: 'Segoe UI, Arial, sans-serif', background: '#f6f8fa', minHeight: '100vh' }}>
@@ -326,7 +332,7 @@ function ExpenseTable({name, username_, LogOut}) {
       </div>
       <button
         type="button"
-        onClick={LogOut}
+        onClick={handleLogout}
         style={{
           marginTop: 20,
           background: '#2d3748',

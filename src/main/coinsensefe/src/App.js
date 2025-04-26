@@ -19,10 +19,10 @@ function App() {
     setIsLoggedIn(true);
   };
 
+
   const onLogOut = () => {
   alert('You are Logging Out!');
     setIsLoggedIn(false);
-     window.location.reload();
   };
 
   return (
