@@ -33,11 +33,13 @@ const Signup = () => {
         });
         const data = await response.json();
         console.log('Response:', data);
-        if(data.ok){
+        if(data.status){
             console.log('hurray!');
             console.log(data.message);
+            alert('Signup successful, please proceed to login page');
         }
     } catch (error) {
+        console.log('Response:');
         console.error('Error:', error);
     }
   };
@@ -95,7 +97,7 @@ const Signup = () => {
             onClick={() => navigate('/')}
             style={{ background: 'none', border: 'none', color: '#9a6bff', cursor: 'pointer', padding: 0 }}
           >
-            Already have an account?
+            Login Page
           </button>
         </div>
       </form>

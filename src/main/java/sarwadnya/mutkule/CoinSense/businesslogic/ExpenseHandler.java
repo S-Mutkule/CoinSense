@@ -3,7 +3,7 @@ package sarwadnya.mutkule.CoinSense.businesslogic;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
-import sarwadnya.mutkule.CoinSense.businesslogic.enums.ExpenseTypeEnum;
+import sarwadnya.mutkule.CoinSense.enums.ExpenseTypeEnum;
 
 import java.util.HashMap;
 import java.util.Map;
