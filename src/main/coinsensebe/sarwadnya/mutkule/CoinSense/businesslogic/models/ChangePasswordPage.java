@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.models.dbentity;
+package sarwadnya.mutkule.CoinSense.businesslogic.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiResponseSignup {
-    @Getter @Setter
+public class ChangePasswordPage {
+    @Getter
+    @Setter
+    private String newPassword;
+    @Getter
+    @Setter
+    private String confirmNewPassword;
+    @Getter
+    @Setter
     private String username;
-    @Getter @Setter
-    private int status;
-
 }

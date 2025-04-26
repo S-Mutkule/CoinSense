@@ -1,7 +1,7 @@
 package sarwadnya.mutkule.CoinSense.businesslogic.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import sarwadnya.mutkule.CoinSense.models.PasswordResetToken;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.PasswordResetToken;
 
 public interface MongoTokenRepo extends MongoRepository<PasswordResetToken, Long> {
     public PasswordResetToken findByuser(String user);

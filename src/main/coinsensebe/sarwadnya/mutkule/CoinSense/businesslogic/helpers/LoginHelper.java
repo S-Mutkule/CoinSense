@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.businesslogic;
+package sarwadnya.mutkule.CoinSense.businesslogic.helpers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +7,8 @@ import sarwadnya.mutkule.CoinSense.businesslogic.cache.MemoryCache;
 import sarwadnya.mutkule.CoinSense.businesslogic.encryption.EncryptionInterface;
 import sarwadnya.mutkule.CoinSense.businesslogic.mappers.MongoUserMapper;
 import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoRepo;
-import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
-import sarwadnya.mutkule.CoinSense.models.dbentity.User;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.MongoUser;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.User;
 
 @Component
 @Slf4j

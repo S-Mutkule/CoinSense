@@ -9,10 +9,21 @@ import NewPasswordPage from './GetNewPasswordPage';
 function App() {
 
   const [username, setUsername] = useState('');
-  const onLoginSuccess = (name) => {
-    console.log(name);
+  const [emailID, setEmailID] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const onLoginSuccess = (name, user) => {
+    console.log('NAME : ', name);
+    console.log('USERNAME : ', user);
     setUsername(name);
-  }
+    setEmailID(user);
+    setIsLoggedIn(true);
+  };
+
+  const onLogOut = () => {
+  alert('You are Logging Out!');
+    setIsLoggedIn(false);
+     window.location.reload();
+  };
 
   return (
 
@@ -20,7 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginPage onLogin={onLoginSuccess} />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/Dashboard" element={<Dashboard name={username} />} />
+        <Route path="/Dashboard" element= {isLoggedIn ? <Dashboard name={username} username_={emailID} LogOut={onLogOut}/> : null }/>
         <Route path="/changePassword" element={<Dashboard />} />
         <Route path="passwordResetterLinkSender" element={<PasswordResetLinkSender />} />
       </Routes>

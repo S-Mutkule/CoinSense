@@ -1,11 +1,11 @@
-package sarwadnya.mutkule.CoinSense.businesslogic;
+package sarwadnya.mutkule.CoinSense.businesslogic.helpers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sarwadnya.mutkule.CoinSense.businesslogic.encryption.EncryptionInterface;
 import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoRepo;
-import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
-import sarwadnya.mutkule.CoinSense.models.dbentity.User;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.MongoUser;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.User;
 @Component
 public class SignupHelper {
    @Autowired

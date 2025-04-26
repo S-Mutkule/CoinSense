@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.controllers;
+package sarwadnya.mutkule.CoinSense.businesslogic.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import sarwadnya.mutkule.CoinSense.businesslogic.SignupHelper;
+import sarwadnya.mutkule.CoinSense.businesslogic.helpers.SignupHelper;
 import sarwadnya.mutkule.CoinSense.businesslogic.mappers.CredentialsMapper;
-import sarwadnya.mutkule.CoinSense.models.UserCredentials;
-import sarwadnya.mutkule.CoinSense.models.dbentity.ApiResponseSignup;
-import sarwadnya.mutkule.CoinSense.models.dbentity.User;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.UserCredentials;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.ApiResponseSignup;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.User;
 
 @Controller
 public class SignupController {

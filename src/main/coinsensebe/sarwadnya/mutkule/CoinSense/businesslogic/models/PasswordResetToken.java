@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.models;
+package sarwadnya.mutkule.CoinSense.businesslogic.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

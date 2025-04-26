@@ -9,6 +9,7 @@ import { useState } from 'react';
 
 const LoginPage = ({ onLogin }) => {
   const navigate = useNavigate();
+  const [user, setUser] = useState('');
   const [name, setName] = useState('');
   const [formData, setFormData] = React.useState({
     username: '',
@@ -23,15 +24,17 @@ const LoginPage = ({ onLogin }) => {
       alert('Wrong Password! Check the Password Entered')
     }
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-   const goToDashboard = ({name}) => {
-      console.log('go to dashboard', name);
-      setName({name})
-      onLogin(name);
+   const goToDashboard = ({name, user_}) => {
+      console.log('go to dashboard', name, user_);
+      setName({name});
+      setUser({user_});
+      onLogin(name, user_);
       navigate('/Dashboard');
     };
 
@@ -51,7 +54,7 @@ const LoginPage = ({ onLogin }) => {
             console.log('Response:', data);
             if(data.status == 200){
                 console.log('HUrray:', data);
-                goToDashboard({name : data.name});
+                goToDashboard({name : data.name, user_: data.user});
             } else{
                 data.body.toLowerCase() === "wrong username" ? alertForUnregisteredUser() : alertForWrongPassword();
             }

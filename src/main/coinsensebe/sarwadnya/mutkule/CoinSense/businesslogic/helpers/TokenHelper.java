@@ -1,16 +1,16 @@
-package sarwadnya.mutkule.CoinSense.businesslogic;
+package sarwadnya.mutkule.CoinSense.businesslogic.helpers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoRepo;
 import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoTokenRepo;
-import sarwadnya.mutkule.CoinSense.models.PasswordResetToken;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.PasswordResetToken;
 
 import java.time.LocalDateTime;
 
 
 @Component
-public class TokenHandler {
+public class TokenHelper {
     @Autowired
     private MongoTokenRepo mongoTokenRepo;
     @Autowired

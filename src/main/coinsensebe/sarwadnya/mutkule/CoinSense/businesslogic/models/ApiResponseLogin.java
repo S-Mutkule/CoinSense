@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.models;
+package sarwadnya.mutkule.CoinSense.businesslogic.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,16 +7,19 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
 @AllArgsConstructor
-public class UserCredentials {
+@NoArgsConstructor
+public class ApiResponseLogin {
     @Getter
     @Setter
-    private String username;
+    private String body;
     @Getter
     @Setter
-    private String password;
+    private int status;
     @Getter
     @Setter
     private String name;
+    @Getter
+    @Setter
+    private String user;
 }

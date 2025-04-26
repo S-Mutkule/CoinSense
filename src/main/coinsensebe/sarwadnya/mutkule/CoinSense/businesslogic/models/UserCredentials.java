@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.models;
+package sarwadnya.mutkule.CoinSense.businesslogic.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-public class PasswordResetPage {
+public class UserCredentials {
     @Getter
     @Setter
-    public String emailID;
+    private String username;
+    @Getter
+    @Setter
+    private String password;
+    @Getter
+    @Setter
+    private String name;
 }

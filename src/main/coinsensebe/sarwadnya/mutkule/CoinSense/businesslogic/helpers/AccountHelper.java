@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.businesslogic;
+package sarwadnya.mutkule.CoinSense.businesslogic.helpers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,19 +10,18 @@ import sarwadnya.mutkule.CoinSense.businesslogic.cache.MemoryCache;
 import sarwadnya.mutkule.CoinSense.businesslogic.encryption.EncryptionInterface;
 import sarwadnya.mutkule.CoinSense.businesslogic.mappers.MongoUserMapper;
 import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoRepo;
-import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
-import sarwadnya.mutkule.CoinSense.models.dbentity.User;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.User;
 
 import java.util.Properties;
 import java.util.UUID;
 
 @Component
-public class AccountHandler {
+public class AccountHelper {
 
     @Autowired
     private EncryptionInterface encryptionInterface;
     @Autowired
-    private TokenHandler tokenHandler;
+    private TokenHelper tokenHelper;
     @Autowired
     private MongoRepo mongoRepo;
     @Autowired
@@ -32,7 +31,7 @@ public class AccountHandler {
 
     public void sendEmailForPasswordReset(String email){
         String tokenString = generateToken();
-        tokenHandler.persistToken(tokenString, 100, email);
+        tokenHelper.persistToken(tokenString, 100, email);
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(email);
         simpleMailMessage.setText("this is the reset link : http://localhost:8080/changePassword" +
@@ -43,7 +42,7 @@ public class AccountHandler {
     }
 
     public boolean checkTokenValidity(String token, String user){
-        return tokenHandler.checkTokenExistsForUser(token, user);
+        return tokenHelper.checkTokenExistsForUser(token, user);
     }
 
     @Bean

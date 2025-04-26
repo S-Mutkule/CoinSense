@@ -1,4 +1,4 @@
-package sarwadnya.mutkule.CoinSense.controllers;
+package sarwadnya.mutkule.CoinSense.businesslogic.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,17 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sarwadnya.mutkule.CoinSense.businesslogic.AccountHandler;
-import sarwadnya.mutkule.CoinSense.businesslogic.LoginHelper;
-import sarwadnya.mutkule.CoinSense.models.*;
+import sarwadnya.mutkule.CoinSense.businesslogic.helpers.AccountHelper;
+import sarwadnya.mutkule.CoinSense.businesslogic.helpers.LoginHelper;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.ApiResponseLogin;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.ChangePasswordPage;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.PasswordResetPage;
 
 import java.util.Map;
 
 @Controller
 @Slf4j
-public class ExpenseTrackerController {
+public class PasswordResetController {
     @Autowired
-    private AccountHandler accountHandler;
+    private AccountHelper accountHelper;
     @Autowired
     private LoginHelper loginHelper;
 
@@ -37,7 +39,7 @@ public class ExpenseTrackerController {
     public ResponseEntity<String> ResetPassword(@RequestBody PasswordResetPage passwordResetPage){
         String user = passwordResetPage.getEmailID();
         if(loginHelper.CheckUserExists(user)) {
-            accountHandler.sendEmailForPasswordReset(user);
+            accountHelper.sendEmailForPasswordReset(user);
             return new ResponseEntity<>("Link sent. Please check your email",
                     HttpStatusCode.valueOf(200));
         }
@@ -47,18 +49,18 @@ public class ExpenseTrackerController {
 
     @GetMapping("/changePassword")
     public ResponseEntity<ApiResponseLogin> changePassword(@RequestParam String token, @RequestParam String username,
-                                 Model model){
-        if(accountHandler.checkTokenValidity(token, username)) {
+                                                           Model model){
+        if(accountHelper.checkTokenValidity(token, username)) {
             ChangePasswordPage changePasswordPage = new ChangePasswordPage();
             changePasswordPage.setUsername(username);
             model.addAttribute("changepasswordpage", changePasswordPage);
-            return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Redirecting to new password entry page", 200, username), HttpStatusCode.valueOf(200));
+            return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Redirecting to new password entry page", 200, username, ""), HttpStatusCode.valueOf(200));
         }
-        return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Invalid Token", 401, username), HttpStatusCode.valueOf(401));
+        return new ResponseEntity<ApiResponseLogin>(new ApiResponseLogin("Invalid Token", 401, username, ""), HttpStatusCode.valueOf(401));
     }
     @PostMapping("/changePassword")
     public ResponseEntity<String> changePassowrd(@RequestParam Map<String, String> map){
-        accountHandler.changePassword(map.get("username"), map.get("newPassword"));
+        accountHelper.changePassword(map.get("username"), map.get("newPassword"));
         return new ResponseEntity<>("Working on your request", HttpStatusCode.valueOf(200));
     }
 }

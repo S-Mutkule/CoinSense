@@ -1,8 +1,8 @@
 package sarwadnya.mutkule.CoinSense.businesslogic.mappers;
 
 import org.springframework.stereotype.Component;
-import sarwadnya.mutkule.CoinSense.models.dbentity.MongoUser;
-import sarwadnya.mutkule.CoinSense.models.dbentity.User;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.MongoUser;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.User;
 
 @Component
 public class MongoUserMapper {
