@@ -1,15 +1,23 @@
 package sarwadnya.mutkule.CoinSense.businesslogic.helpers;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.Expense;
 import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.ExpenseObj;
+import sarwadnya.mutkule.CoinSense.businesslogic.models.dbentity.MongoUser;
 import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoExpenseRepository;
+import sarwadnya.mutkule.CoinSense.businesslogic.repository.MongoRepo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class ExpenseHelper {
     /* Steps to be followed
@@ -20,6 +28,12 @@ public class ExpenseHelper {
     * */
     @Autowired
     private MongoExpenseRepository mongoExpenseRepository;
+    @Autowired
+    private PdfHelper pdfHelper;
+    @Autowired
+    private MongoRepo mongoRepo;
+    @Autowired
+    private ReportEmailHelper reportEmailHelper;
     public boolean PersistExpenseToDB(Expense expense){
         try {
             Expense fetchedDbExpenseObj = mongoExpenseRepository.findByusername(expense.getUsername());
@@ -44,6 +58,36 @@ public class ExpenseHelper {
             return new Expense();
         } else{
             return fetchedExpenses;
+        }
+    }
+    @Scheduled(cron = "0 0 0 1 * ?")
+    public void monthlyReport() {
+        List<MongoUser> mongoUserList = mongoRepo.findAll();
+        for(MongoUser user : mongoUserList){
+            if(!SendExpenseReportToUser(user.getUsername()))
+                log.error("Mail Sending Failed for User : " + user.getUsername());
+        }
+        System.out.println("Executing monthly job: " + LocalDateTime.now());
+
+    }
+    public boolean SendExpenseReportToUser(String username){
+        boolean bool = false;
+        try{
+            Expense fetchedExpenses = mongoExpenseRepository.findByusername(username);
+            MongoUser user = mongoRepo.findByusername(username);
+            List<String[]> expenseList = fetchedExpenses.getExpensesList().stream()
+                    .map(expense -> new String[]{
+                            expense.getDateOfExpense(),
+                            expense.getExpenseType(),
+                            String.valueOf(expense.getAmount())
+                    }).toList();
+            String[] headers = {"Date", "Category", "Amount"};
+            byte[] arr = pdfHelper.ExportToPdf(expenseList, Arrays.stream(headers).toList(), user.getName());
+            reportEmailHelper.SendEmailWithPdfAttachment(username, "Monthly Expense Report", "", arr, "Expense");
+            return arr.length > 0;
+        } catch(Exception ex){
+            log.error("Exception while sending the report to the user", ex);
+            return false;
         }
     }
 }
