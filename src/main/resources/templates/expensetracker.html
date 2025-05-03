@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <title>
             Coin Sense
         </title>
     </head>
-    <body>
-        <button onclick="window.location.href = 'http://localhost:8080/loginPage';">Login</button>
+    <body style="background-color: #A52A2A;">
+    <h1>CoinSense Login Page</h1>
+    <div>
+        <form style="text-align:center;">
+            <a href="/loginPage/login">Login</a>
+        </form>
+        <form style="text-align:center;">
+            <a href="/signup">Signup</a>
+        </form>
+
+    </div>
+        <!--<button onclick="window.location.href = 'http://localhost:8080/userCredentials';">Login</button>-->
     </body>
 </html>

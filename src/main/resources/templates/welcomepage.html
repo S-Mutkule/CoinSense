@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Coin Sense</title>
+</head>
+<body>
+<h1 style="text-align:center;background-color:rgb(100,10,80)">Welcome To CoinSense</h1>
+<h2 style="text-align:center;background-color:rgb(100,200,200)">How can I be of assistance today?
+</h2>
+    <div style="position:relative;display:inline-block;" class="dropdown" id="dropdownMenu">
+        <button style="background-color:#04AA6D;color:white;padding:16px;font-size:16px;
+        border:none;cursor:pointer;" class="dropbtn" onclick="AddExpense()" id="dropdownBtn">
+            AddExpense</button>
+        <button style="background-color:#04AA6D;color:white;padding:16px;font-size:16px;
+        border:none;cursor:pointer;" class="dropbtn" onclick="AddExpense()" id="summariyBtn">
+            ShowMySummary</button>
+    </div>
+
+
+<script>
+    function AddExpense(){
+        var el = document.getElementById("dropdown-content");
+        el.style.display = "block";
+    }
+    function myFunction() {
+     document.getElementById("myDropdown").classList.toggle("show");
+    }
+</script>
+</body>
+</html>

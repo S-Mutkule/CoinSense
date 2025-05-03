@@ -1,0 +1,101 @@
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu li.active {
+  background-color: #e0e0e0;
+}
+
+.user-profile {
+  margin-top: 20px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+/* Main Content Styles */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.income-card,
+.expense-card,
+.earnings-card {
+  width: 30%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-value {
+  font-size: 24px;
+}
+
+.card-footer {
+  font-size: 12px;
+}
+
+.expense-sources,
+.report-overview,
+.expense-activity {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.bar-chart-placeholder,
+.donut-chart-placeholder,
+.line-chart-placeholder {
+  height: 200px;
+  border: 1px dashed #999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.report-legend {
+  display: flex;
+  justify-content: space-around;
+}

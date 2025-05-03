@@ -6,7 +6,7 @@
             Signup Page
         </title>
     </head>
-    <body>
+    <body style="background-color: #A52A2A;">
     <form role="form" method="post" th:object="${signupPage}" th:action="@{/signup}">
         <div>
             <label>Name</label>
@@ -18,9 +18,20 @@
         </div>
         <div>
             <label>Password</label>
-            <input type="text" th:field="*{password}">
+            <input type="password" value="FakePSW" th:field="*{password}" id="myInput">
+            <input type="checkbox" onclick="myFunction()">Show Password
         </div>
         <input type="submit" name="submit">
     </form>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
     </body>
 </html>
