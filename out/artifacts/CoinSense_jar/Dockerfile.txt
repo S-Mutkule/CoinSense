@@ -1,4 +1,4 @@
 FROM openjdk:17-jdk-slim
-COPY out\artifacts\CoinSense_jar\CoinSense.jar app.jar
+COPY CoinSense.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
