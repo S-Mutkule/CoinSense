@@ -60,7 +60,7 @@ public class ExpenseHelper {
             return fetchedExpenses;
         }
     }
-    @Scheduled(cron = "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 1  * ?")
     public void monthlyReport() {
         List<MongoUser> mongoUserList = mongoRepo.findAll();
         for(MongoUser user : mongoUserList){
