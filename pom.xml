@@ -119,7 +119,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<workingDirectory>src/main/coinsensefe</workingDirectory>
+					<workingDirectory>src/main/frontend</workingDirectory>
 				</configuration>
 			</plugin>
 
