@@ -23,11 +23,19 @@ public class PasswordResetController {
     @Autowired
     private LoginHelper loginHelper;
 
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @GetMapping("/expenseTracker/home")
     public String ExpenseTracker(){
         return "expensetracker";
     }
 
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @GetMapping("/resetpassword")
     public String ResetPasswordPage(Model model){
         PasswordResetPage passwordResetPage = new PasswordResetPage();
@@ -35,6 +43,10 @@ public class PasswordResetController {
         return "resetpassword";
     }
 
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @PostMapping("/resetpassword/sendlink")
     public ResponseEntity<String> ResetPassword(@RequestBody PasswordResetPage passwordResetPage){
         String user = passwordResetPage.getEmailID();

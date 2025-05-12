@@ -41,8 +41,12 @@ const LoginPage = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+
+    console.log('apiUrl:', apiUrl);
     try{
-        const response = await fetch("/loginPage/login", {
+        const response = await fetch(`${apiUrl}/loginPage/login`, {
                 method: 'POST',
                 headers: { 'Content-Type' : 'application/json' },
                 body: JSON.stringify({

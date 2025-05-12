@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import sarwadnya.mutkule.CoinSenseApp.businesslogic.helpers.LoginHelper;
@@ -24,6 +25,10 @@ public class LoginController {
     @Autowired
     MemoryCache memoryCache;
 
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @PostMapping("/loginPage/login")
     public ResponseEntity<ApiResponseLogin> LogUserIn(@RequestBody UserCredentials userCredentials){
         User userClient = credentialsMapper.MapCredsToUser(userCredentials);

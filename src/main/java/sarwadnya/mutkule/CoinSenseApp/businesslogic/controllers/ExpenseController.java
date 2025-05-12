@@ -3,6 +3,7 @@ package sarwadnya.mutkule.CoinSenseApp.businesslogic.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import sarwadnya.mutkule.CoinSenseApp.businesslogic.helpers.ExpenseHelper;
@@ -14,6 +15,10 @@ public class ExpenseController {
     @Autowired
     private ExpenseHelper expenseHelper;
 
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @PostMapping("/expenses")
     public ResponseEntity<String> HandleExpenses(@RequestBody Expense expense){
         if(expenseHelper.PersistExpenseToDB(expense)) {

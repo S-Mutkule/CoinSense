@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import sarwadnya.mutkule.CoinSenseApp.businesslogic.helpers.SignupHelper;
@@ -21,6 +22,10 @@ public class SignupController {
     @Autowired
     private SignupHelper signupHelper;
 
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @PostMapping("/signup")
     public ResponseEntity<ApiResponseSignup> Signup(@RequestBody UserCredentials userCredentials){
         User user = credentialsMapper.MapCredsToUser(userCredentials);

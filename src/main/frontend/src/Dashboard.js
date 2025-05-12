@@ -97,8 +97,10 @@ function ExpenseTable({name, username_, LogOut}) {
   }
 
   const FetchExpensesForUser = async () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
     try {
-        const response = await fetch('/fetchExpenses', {
+        console.log("URLUSED : ",apiUrl);
+        const response = await fetch(`${apiUrl}/fetchExpenses`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username : username_ }),
