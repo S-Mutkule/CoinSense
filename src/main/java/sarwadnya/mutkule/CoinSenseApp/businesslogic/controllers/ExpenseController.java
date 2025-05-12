@@ -27,6 +27,10 @@ public class ExpenseController {
         }
         return ResponseEntity.ok("Error in persisting data");
     }
+    @CrossOrigin(origins = {
+            "http://localhost:3000",
+            "https://coinsense-li5k.onrender.com"
+    })
     @PostMapping("/fetchExpenses")
     public ResponseEntity<Expense> FetchAllExpenses(@RequestBody UserCredentials userCredentials) {
         Expense expense = expenseHelper.GetAllExpensesForUser(userCredentials.getUsername());
