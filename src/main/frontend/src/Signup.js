@@ -21,6 +21,7 @@ const Signup = () => {
     e.preventDefault();
     console.log('Signup Data:', formData);
     const apiUrl = process.env.REACT_APP_API_URL;
+    console.log("URL : ", apiUrl);
     // Add your signup API call here
     try{
         const response = await fetch(`${apiUrl}/signup`, {

@@ -25,6 +25,7 @@ function ExpenseTable({name, username_, LogOut}) {
   const [expense, setExpense] = useState({dateOfExpense:'', expenseType:'', amount:''});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   // Add row
   const addRow = () => {
@@ -67,8 +68,9 @@ function ExpenseTable({name, username_, LogOut}) {
     setIsSubmitting(true);
         setSubmitMessage('');
         console.log('uername : ', username_);
+        console.log('apiurl', apiUrl);
     try {
-      const response = await fetch('/expenses', {
+        const response = await fetch(`${apiUrl}/expenses`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username : username_, expensesList: rows }),
@@ -97,7 +99,7 @@ function ExpenseTable({name, username_, LogOut}) {
   }
 
   const FetchExpensesForUser = async () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+
     try {
         console.log("URLUSED : ",apiUrl);
         const response = await fetch(`${apiUrl}/fetchExpenses`, {
