@@ -39,6 +39,7 @@ graph TD
     style G fill:#FCE5CD
 ```
 
+
 ## Persistence & Future improvements
 
 Currently, all data is stored in-memory on the client and is lost upon page refresh.
